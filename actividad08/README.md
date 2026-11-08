@@ -2,7 +2,7 @@
 
 ## Genera una edad aleatoria válida
 
-Genera una edad entre 18 y 65 inclusive.
+Genera una edad entre 18 y 65 inclusive e imprímela con el formato `Edad: X`.
 
 ## Objetivo
 
@@ -15,6 +15,7 @@ Genera una edad entre 18 y 65 inclusive.
 
 ```text
 Usa nextInt(48) + 18.
+Salida de ejemplo (el número cambia en cada ejecución): Edad: 37
 ```
 
 ## Instrucciones para Eclipse
@@ -28,4 +29,5 @@ Usa nextInt(48) + 18.
 
 ## GitHub Actions
 
-- El workflow `Java CI` ejecuta automáticamente `mvn test` en cada push.
+- Sube tu trabajo a **tu rama** (no a `main`): el workflow `Autocorrección` compila y ejecuta los tests de cada actividad que hayas modificado.
+- En la pestaña **Actions** del repositorio verás ✅ si la actividad está aprobada o ❌ si hay errores de compilación o tests que fallan.

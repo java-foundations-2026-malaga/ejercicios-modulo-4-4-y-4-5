@@ -2,7 +2,7 @@
 
 ## Crea una secuencia reproducible con semilla
 
-Compara tres valores de dos objetos con la misma semilla.
+Crea dos objetos `Random` con la misma semilla (`2026`), genera tres valores con `nextInt(100)` en cada uno y comprueba si coinciden.
 
 ## Objetivo
 
@@ -12,6 +12,12 @@ Compara tres valores de dos objetos con la misma semilla.
 - Hacer `git add`, `git commit` y `git push`.
 
 ## Criterio de autocorrección
+
+```text
+Usa new Random(2026) dos veces y nextInt(100).
+```
+
+## Salida esperada
 
 ```text
 Secuencias iguales: true
@@ -28,4 +34,5 @@ Secuencias iguales: true
 
 ## GitHub Actions
 
-- El workflow `Java CI` ejecuta automáticamente `mvn test` en cada push.
+- Sube tu trabajo a **tu rama** (no a `main`): el workflow `Autocorrección` compila y ejecuta los tests de cada actividad que hayas modificado.
+- En la pestaña **Actions** del repositorio verás ✅ si la actividad está aprobada o ❌ si hay errores de compilación o tests que fallan.

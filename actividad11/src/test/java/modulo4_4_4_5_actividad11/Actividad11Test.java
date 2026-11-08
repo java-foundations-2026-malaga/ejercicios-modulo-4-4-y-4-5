@@ -1,22 +1,76 @@
 package modulo4_4_4_5_actividad11;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.junit.jupiter.api.Test;
 
 class Actividad11Test {
-  @Test
-  void salidaEsperada() throws Exception {
-    ByteArrayOutputStream b = new ByteArrayOutputStream();
-    PrintStream old = System.out;
-    System.setOut(new PrintStream(b, true, StandardCharsets.UTF_8));
-    try {
-      Actividad11.main(new String[0]);
-    } finally {
-      System.setOut(old);
+
+    @Test
+    void salidaEsperada() throws Exception {
+        String salida = ejecutar();
+        assertSalidaNumerica("11.0", salida);
     }
-    assertEquals("11.0", b.toString(StandardCharsets.UTF_8).replace("\r\n", "\n").trim());
-  }
+
+    @Test
+    void compruebaCodigo() throws Exception {
+        String codigo = leerCodigo();
+        assertTrue(contiene(codigo, "Math\\s*\\.\\s*sqrt\\s*\\("), "Debe usarse Math.sqrt()");
+    }
+
+    private static String ejecutar() throws Exception {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        Locale originalLocale = Locale.getDefault();
+        Locale.setDefault(Locale.US);
+        System.setOut(new PrintStream(buffer, true, StandardCharsets.UTF_8));
+        try {
+            Actividad11.main(new String[0]);
+        } finally {
+            System.setOut(originalOut);
+            Locale.setDefault(originalLocale);
+        }
+        String texto = buffer.toString(StandardCharsets.UTF_8).replace("\r\n", "\n").replace('\r', '\n');
+        StringBuilder salida = new StringBuilder();
+        for (String linea : texto.split("\n")) {
+            salida.append(linea.strip()).append("\n");
+        }
+        return salida.toString().strip();
+    }
+
+    private static void assertSalidaNumerica(String esperada, String salida) {
+        String[] lineasEsperadas = esperada.split("\n");
+        String[] lineas = salida.split("\n");
+        assertEquals(lineasEsperadas.length, lineas.length, "Número de líneas incorrecto. Salida obtenida:\n" + salida);
+        Pattern numero = Pattern.compile("(.*?)(-?\\d+(\\.\\d+)?)");
+        for (int i = 0; i < lineas.length; i++) {
+            Matcher e = numero.matcher(lineasEsperadas[i]);
+            Matcher a = numero.matcher(lineas[i]);
+            if (e.matches() && a.matches() && e.group(1).equals(a.group(1))) {
+                assertEquals(Double.parseDouble(e.group(2)), Double.parseDouble(a.group(2)), 1e-9,
+                        "Valor incorrecto en la línea: " + lineas[i]);
+            } else {
+                assertEquals(lineasEsperadas[i], lineas[i]);
+            }
+        }
+    }
+
+    private static String leerCodigo() throws Exception {
+        String codigo = Files.readString(Path.of("src/main/java/modulo4_4_4_5_actividad11/Actividad11.java"));
+        return codigo.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\n]*", "");
+    }
+
+    private static boolean contiene(String codigo, String regex) {
+        return Pattern.compile(regex).matcher(codigo).find();
+    }
 }
