@@ -4,5 +4,8 @@ public class Actividad17 {
     public static void main(String[] args) {
         double n = 16;
         // TODO
+        
+        System.out.println("Raíz: " + Math.sqrt(n));
+        System.out.println("Cuadrado: " + Math.pow(n, 2));
     }
 }

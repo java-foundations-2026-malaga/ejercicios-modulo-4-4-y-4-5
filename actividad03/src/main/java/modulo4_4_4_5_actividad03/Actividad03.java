@@ -5,7 +5,7 @@ import java.util.Random;
 public class Actividad03 {
     public static void main(String[] args) {
         Random rnd = new Random(42);
-        int dado = rnd.nextInt(6);
+        int dado = rnd.nextInt(6) + 1;
         System.out.println(dado >= 1 && dado <= 6 ? "Dado válido" : "Dado inválido");
     }
 }

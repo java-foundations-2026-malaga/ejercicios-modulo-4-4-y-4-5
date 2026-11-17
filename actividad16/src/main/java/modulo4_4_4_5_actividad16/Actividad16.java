@@ -4,5 +4,8 @@ public class Actividad16 {
     public static void main(String[] args) {
         int a = 12, b = 5;
         // TODO
+        
+        System.out.println("Mayor: " + Math.max(a, b));
+        System.out.println("Menor: " + Math.min(a, b));
     }
 }
