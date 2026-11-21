@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class Actividad02 {
     public static void main(String[] args) {
-        Random rnd = Random();
+        Random random = new Random();
+
         System.out.println("Random creado");
     }
 }
